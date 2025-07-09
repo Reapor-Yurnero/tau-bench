@@ -82,7 +82,8 @@ def context_description(grading_strategy: GradingStrategy) -> str:
 
 def display_traj(traj: List[Dict[str, Any]]) -> str:
     if len(traj) == 0:
-        raise ValueError("Trajectory is empty")
+        return "EMPTY Trajectory"
+        # raise ValueError("Trajectory is empty")
     stripped_traj = [item for item in traj if item["role"] != "system"]
     return "\n".join([f"{item['role'].capitalize()}: {item['content']}" for item in stripped_traj])
 

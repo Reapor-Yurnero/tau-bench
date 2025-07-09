@@ -40,7 +40,8 @@ class ToolCallingAgent(Agent):
             res = completion(
                 messages=messages,
                 model=self.model,
-                custom_llm_provider=self.provider,
+                # custom_llm_provider=self.provider,
+                api_base="http://10.200.8.45:8000/v1",
                 tools=self.tools_info,
                 temperature=self.temperature,
             )

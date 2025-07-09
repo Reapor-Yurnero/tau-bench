@@ -46,6 +46,7 @@ class LLMUserSimulationEnv(BaseUserSimulationEnv):
     def generate_next_message(self, messages: List[Dict[str, Any]]) -> str:
         res = completion(
             model=self.model, custom_llm_provider=self.provider, messages=messages
+            # model=self.model, messages=messages
         )
         message = res.choices[0].message
         self.messages.append(message.model_dump())

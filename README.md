@@ -67,6 +67,8 @@ To run specific tasks, use the `--task-ids` flag. For example:
 
 ```bash
 python run.py --agent-strategy tool-calling --env retail --model gpt-4o --model-provider openai --user-model gpt-4o --user-model-provider openai --user-strategy llm --max-concurrency 10 --task-ids 2 4 6
+python run.py --agent-strategy react --env retail --model hosted_vllm/meta-llama/Llama-3.3-70B-Instruct-SecAlign --model-provider openai --user-model azure/gpt-4o --user-model-provider azure --user-strategy llm --max-concurrency 10
+
 ```
 
 This command will run only the tasks with IDs 2, 4, and 6.

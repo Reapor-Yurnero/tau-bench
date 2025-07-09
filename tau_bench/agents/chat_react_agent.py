@@ -39,7 +39,8 @@ class ChatReActAgent(Agent):
     ) -> Tuple[Dict[str, Any], Action, float]:
         res = completion(
             model=self.model,
-            custom_llm_provider=self.provider,
+            # custom_llm_provider=self.provider,
+            api_base="http://10.200.8.45:8000/v1",
             messages=messages,
             temperature=self.temperature,
         )
@@ -56,7 +57,7 @@ class ChatReActAgent(Agent):
         assert "name" in action_parsed
         assert "arguments" in action_parsed
         action = Action(name=action_parsed["name"], kwargs=action_parsed["arguments"])
-        return message.model_dump(), action, res._hidden_params["response_cost"]
+        return message.model_dump(), action, 0 if not res._hidden_params["response_cost"] else res._hidden_params["response_cost"]
 
     def solve(
         self, env: Env, task_index: Optional[int] = None, max_num_steps: int = 30
