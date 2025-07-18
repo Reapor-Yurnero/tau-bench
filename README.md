@@ -2,7 +2,20 @@
 
 **Paper**: [https://arxiv.org/abs/2406.12045](https://arxiv.org/abs/2406.12045)
 
-## SLURM Usage Explaination
+## Data Scripts
+Expert data -> sft data
+```
+python convert_trajectory.py input_file_path output_file_path
+```
+WM data -> WM sft data
+```
+python wmdata_to_sftdata.py [--input input_file_path] [--output output_file_path]
+```
+WM data -> self-reflection data: Not implemented yet but should be easily extensible on top of `wmdata_to_sftdata.py`.
+
+## SLURM Scripts
+
+Before running any slurm scripts first make sure the current bash has the desired conda env activated. Also you will need to provide correct AZURE API KEY in the scripts.
 
 To evaluate one single model, run
 ```

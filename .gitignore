@@ -1,6 +1,3 @@
-#Run result artifacts
-results/**
-!results/Llama*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

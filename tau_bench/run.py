@@ -27,7 +27,7 @@ def run(config: RunConfig) -> List[EnvRunResult]:
 
     random.seed(config.seed)
     time_str = datetime.now().strftime("%m%d%H%M%S")
-    ckpt_path = f"{config.log_dir}/{config.env}-temperature-{config.temperature}_{time_str}.json"
+    ckpt_path = f"{config.log_dir}/{config.env}-temperature-{config.temperature}.json"
     if not os.path.exists(config.log_dir):
         os.makedirs(config.log_dir)
 
