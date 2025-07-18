@@ -1,6 +1,6 @@
 # Copyright Sierra
 
-import json
+import json, os
 from litellm import completion
 from typing import List, Optional, Dict, Any
 
@@ -37,16 +37,26 @@ class ToolCallingAgent(Agent):
             {"role": "user", "content": obs},
         ]
         for _ in range(max_num_steps):
-            res = completion(
-                messages=messages,
-                model=self.model,
-                # custom_llm_provider=self.provider,
-                api_base="http://10.200.8.45:8000/v1",
-                tools=self.tools_info,
-                temperature=self.temperature,
-            )
+            if "Llama" in self.model or 'sft' in self.model or 'Qwen' in self.model:
+                res = completion(
+                    messages=messages,
+                    model=self.model,
+                    # custom_llm_provider=self.provider,
+                    api_base=f"http://{os.getenv('VLLM_HOST')}:8000/v1",
+                    tools=self.tools_info,
+                    temperature=self.temperature,
+                )
+            else:
+                res = completion(
+                    messages=messages,
+                    model=self.model,
+                    custom_llm_provider=self.provider,
+                    # api_base="http://cr1-h100-p548xlarge-34:8000/v1",
+                    tools=self.tools_info,
+                    temperature=self.temperature,
+                )
             next_message = res.choices[0].message.model_dump()
-            total_cost += res._hidden_params["response_cost"]
+            total_cost += res._hidden_params["response_cost"] or 0
             action = message_to_action(next_message)
             env_response = env.step(action)
             reward = env_response.reward

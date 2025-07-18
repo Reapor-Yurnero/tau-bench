@@ -2,6 +2,32 @@
 
 **Paper**: [https://arxiv.org/abs/2406.12045](https://arxiv.org/abs/2406.12045)
 
+## SLURM Usage Explaination
+
+To evaluate one single model, run
+```
+./submit_one_eval.sh /path/to/your/model
+```
+e.g. 
+```
+./submit_one_eval.sh meta-llama/Llama-3.2-3B-Instruct
+```
+
+To batch eval all checkpoints of a model:
+```
+./submit_one_eval.sh /path/to/your/checkpoints
+```
+Assuming that the checkpoint folder is structured as 
+```
+checkpoints_dir
+|- checkpoint-10
+|- checkpoint-20
+...
+```
+e.g. 
+```
+./submit_one_eval.sh /checkpoint/example/sft_models/meta-llama/Llama-3.1-8B-Instruct_IL/
+```
 ## Leaderboard
 
 ### Airline
@@ -67,8 +93,8 @@ To run specific tasks, use the `--task-ids` flag. For example:
 
 ```bash
 python run.py --agent-strategy tool-calling --env retail --model gpt-4o --model-provider openai --user-model gpt-4o --user-model-provider openai --user-strategy llm --max-concurrency 10 --task-ids 2 4 6
-python run.py --agent-strategy react --env retail --model hosted_vllm/meta-llama/Llama-3.3-70B-Instruct-SecAlign --model-provider openai --user-model azure/gpt-4o --user-model-provider azure --user-strategy llm --max-concurrency 10
-
+python run.py --agent-strategy react --env retail --model hosted_vllm/meta-llama/Llama-3.1-8B-Instruct --model-provider openai --user-model azure/gpt-4o --user-model-provider azure --user-strategy llm --max-concurrency 10
+VLLM_HOST=cr1-h100-p548xlarge-112 python run.py --agent-strategy tool-calling --env retail --model hosted_vllm/meta-llama/Llama-3.3-70B-Instruct --model-provider openai --user-model azure/gpt-4o --user-model-provider azure --user-strategy llm --max-concurrency 10
 ```
 
 This command will run only the tasks with IDs 2, 4, and 6.
